@@ -105,3 +105,9 @@ a {
     color-scheme: dark;
   }
 } */
+
+.divWallpaper {
+  background-image: url("https://img.freepik.com/free-vector/elegant-flowing-pink-business-wave-background_1035-23193.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

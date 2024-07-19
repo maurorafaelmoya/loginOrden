@@ -1,9 +1,12 @@
+import MiniDrawer from "@/components/pageDrawer"
 
 
 
 const page = () => {
     return (
-        <div>orders</div>
+        <MiniDrawer>
+            
+        </MiniDrawer>
     )
 }
 
