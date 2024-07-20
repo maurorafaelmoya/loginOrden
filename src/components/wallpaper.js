@@ -12,7 +12,7 @@ const Wallpaper = forwardRef(({ children } ) => (
                         <Typography variant='h5' color='#e3026f'> ¡Bienvenido de vuelta!</Typography>
                     </Stack>
                 </Grid2>
-                <Grid2 padding={5} xs={5}>
+                <Grid2 padding={5} xs={9}>
                     {children}
                 </Grid2>
             </Grid2>

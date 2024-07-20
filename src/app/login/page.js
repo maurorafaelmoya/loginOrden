@@ -11,7 +11,7 @@ const Login = () => {
 
         <Wallpaper>
             <Card
-                style={{width: '600px',
+                style={{width: '55%',
                     height:'100%',
                     align :'center',
                     padding:10
