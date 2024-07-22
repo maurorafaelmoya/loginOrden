@@ -1,85 +1,104 @@
-"use client"
-import { AccountCircle, Image, Inbox, LocalMall, Mail } from '@mui/icons-material';
-import { Box, CssBaseline, Divider, Drawer, Icon, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
-import { useState } from 'react';
+'use client'
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import { InsertPhoto, Shop, AccountCircle } from "@mui/icons-material";
+import { Box, Divider, CssBaseline, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Drawer as MuiDrawer, Icon } from "@mui/material";
+import { usePathname, useRouter } from "next/navigation";
 
-    const drawerWidth = 240;
+const closedMixin = (theme) => ({
+    transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
+    }),
+    width: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.up("sm")]: {
+        width: `calc(${theme.spacing(8)} + 1px)`
+    }
+    });
 
-    export default function MiniDrawer() {
+const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar
+}));
 
-        const DrawerHeader = styled('div')(({ theme }) => ({
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            padding: theme.spacing(0, 1),
-            // necessary for content to be below app bar
-            ...theme.mixins.toolbar,
-        }));
+const Drawer = styled(MuiDrawer)(({ theme }) => ({
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme)
+    })
+);
+
+export default function MiniDrawer({ children }) {
+
+    const pathname = usePathname().slice(1)
+    const router = useRouter()
+
+    const OneClic = (path) =>{
+        router.push(`/${path}`)
+    }
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: "flex" }}>
         <CssBaseline />
-
-        <Drawer variant="permanent" open={open}>
-            <Icon style={{alignContent:'flex', alignItems:'center', minHeight:46}}><AccountCircle /></Icon>
+        <Drawer variant="permanent">
+            <DrawerHeader>
+            <IconButton>
+                <AccountCircle />
+            </IconButton>
+            </DrawerHeader>
+            <Divider />
             <List>
-                <ListItem key={'orders'} disablePadding sx={{ display: 'block' }}>
+                <ListItem key={'orders'} disablePadding sx={{ display: "block" }}>
                     <ListItemButton
-                        sx={{
+                    sx={{
                         minHeight: 48,
-                        justifyContent: 'center',
-                        px: 2.5,
+                        justifyContent: "center",
+                        px: 2.5
+                    }}
+                    onClick={()=> OneClic('orders') }
+                    
+                    >
+                    <ListItemIcon
+                        sx={{
+                        minWidth: 0,
+                        mr: "auto",
+                        justifyContent: "center"
                         }}
                     >
-                        <ListItemIcon
-                        sx={{
-                            minWidth: 0,
-                            mr: 3,
-                            justifyContent: 'center',
-                        }}
-                        >
-                        {<LocalMall  />}
-                        </ListItemIcon>
+                        {pathname === 'orders' ? <Shop sx={{color:'#e3026f'}}/> : <Shop/> }
+                    </ListItemIcon>
                     </ListItemButton>
                 </ListItem>
-                <ListItem key={'pictures'} disablePadding sx={{ display: 'block' }}>
+                <ListItem key={"pictures"} disablePadding sx={{ display: "block" }}>
                     <ListItemButton
-                        sx={{
+                    sx={{
                         minHeight: 48,
-                        justifyContent: 'center',
-                        px: 2.5,
+                        justifyContent: "center",
+                        px: 2.5
+                    }}
+                    onClick={()=> OneClic('pictures') }
+
+                    >
+                    <ListItemIcon
+                        sx={{
+                        minWidth: 0,
+                        mr: "auto",
+                        justifyContent: "center"
                         }}
                     >
-                        <ListItemIcon
-                        sx={{
-                            minWidth: 0,
-                            mr: 3,
-                            justifyContent: 'center',
-                        }}
-                        >
-                        {<Image  />}
-                        </ListItemIcon>
+                        {pathname === 'pictures' ? <InsertPhoto sx={{color:'#e3026f'}}/> : <InsertPhoto/> }
+                    </ListItemIcon>
+                    <ListItemText primary={"text"} sx={{ opacity: 0 }} />
                     </ListItemButton>
-                    </ListItem>
+                </ListItem>
             </List>
         </Drawer>
-        <Box sx={{ flexGrow: 1, p: 3 }}>
-            <DrawerHeader/>
-            <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-            eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-            neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-            tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-            sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-            tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-            gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-            et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-            tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-            </Typography>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            {children}
         </Box>
         </Box>
     );
-    }
+}
