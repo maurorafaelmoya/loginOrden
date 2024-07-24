@@ -1,9 +1,14 @@
+'use client'
 import Wallpaper from "@/components/wallpaper"
-import { AccountCircle, AlternateEmail, Language, Lock, Phone, PhoneIphone } from "@mui/icons-material"
-import { Button, Card, CardContent, CardHeader, Checkbox, FormControlLabel, Icon, InputAdornment, Link, Stack, TextField } from "@mui/material"
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2"
+import { AccountCircle, AlternateEmail, Language, Lock, Phone, PhoneIphone, Visibility, VisibilityOff } from "@mui/icons-material"
+import { Button, Card, CardContent, CardHeader, Checkbox, FormControlLabel, Icon, IconButton, InputAdornment, Link, Stack, TextField } from "@mui/material"
+import { useState } from "react"
 
 const Register = () => {
+    
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleShowPassword = () =>{ setShowPassword(!showPassword) }
 
     return (
         <Wallpaper>
@@ -101,22 +106,38 @@ const Register = () => {
                             <TextField 
                                 label="Contraseña"
                                 style={Styles.TextField}
+                                type={showPassword ? 'text': 'password'}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
                                             <Lock />
                                         </InputAdornment>
                                     ),
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={handleShowPassword} edge="end">
+                                                {!showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
                                 }}/>
                             <TextField 
                                 label="Verificar Contraseña"
                                 style={Styles.TextField}
+                                type={showPassword ? 'text': 'password'}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
                                             <Lock />
                                         </InputAdornment>
                                     ),
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={handleShowPassword} edge="end">
+                                                {!showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
                                 }}/>
                         </Stack>
                         <FormControlLabel style={{alignItems:'center'}} control={<Checkbox style={{color:'#e3026f'}} defaultChecked />} label="Acepto los terminos y condiciones" />

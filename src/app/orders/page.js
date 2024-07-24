@@ -9,7 +9,6 @@ import TableOrdens from "@/components/tableOrder"
 
 
 const page = () => {
-    const pathname = usePathname()
     const [data, setData] = useState([])
 
     useEffect(() => {
