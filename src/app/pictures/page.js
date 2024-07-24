@@ -73,7 +73,6 @@ const pictures = () => {
     
 
     const BoxImage = (props ) => {
-        console.log()
         if(props.number === selected){
             return ( <Box 
                         key={props.number} 
