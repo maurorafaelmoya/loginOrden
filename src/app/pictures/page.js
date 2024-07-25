@@ -13,11 +13,8 @@ const pictures = () => {
 
     useEffect(() => {
         fetchImages();
-    }, [])
+    }, [uploading])
     
-
-    const agrega = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,1,1,1,1,1,1,1]
-
     const oneClick = number =>{
         setSelected(number)
     }
@@ -82,7 +79,7 @@ const pictures = () => {
                     >
                         <Button 
                             style={{width:'100%', height:'100%'}} 
-                            onClick={()=> oneClick(number) }
+                            onClick={()=> oneClick(props.number) }
                             >
                             <img style={{width:'100%', height:'100%'}} src={props.index.data.publicUrl} />
                         </Button>

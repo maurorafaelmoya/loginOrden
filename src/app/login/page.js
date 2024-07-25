@@ -2,9 +2,10 @@
 import Wallpaper from "@/components/wallpaper"
 import { AlternateEmail, Apple, Facebook, Google, Lock, Password, Visibility, VisibilityOff } from "@mui/icons-material"
 import { Alert, Button, Card, CardContent, CardHeader, Icon, IconButton, InputAdornment, Link, Stack, TextField } from "@mui/material"
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { supabase } from "../supabase/configSupabase"
+import bcryptjs from 'bcryptjs';
 
 const Login = () => {
 
@@ -13,12 +14,13 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [alert, setAlert] = useState('');
     const [message, setMessage] = useState('');
+    const [dataUser, setDataUser] = useState([]);
 
     const router = useRouter();
 
     const handleShowPassword = () =>{ setShowPassword(!showPassword) }
 
-    const sendData = () =>{
+    const sendData = async () =>{
 
         setMessage('')
         setAlert('')
@@ -27,20 +29,41 @@ const Login = () => {
             setMessage('Favor de verificar los campos')
             setAlert('error')
         }else{
-            const data = {
-                email: email,
-                password: password
-            }
-    
-            setMessage('Inicio de sesion exitoso')
-            setAlert('success')
+            
+            const { data, error } = await supabase
+                .from('users')
+                .select('*')
+                .eq('email', email)
+            
+            if (error) {
+                setMessage('Favor de verificar los campos')
+                setAlert('error')
+            } else {
 
-            setTimeout(() => {
-                router.push(`/orders`)
-                
-            }, 5000);
+                if(data.length === 0){
+                    setMessage('Favor de verificar los campos')
+                    setAlert('error')
+                    return
+                }
+
+                const validPassword = bcryptjs.compareSync(password, data[0].password);
+
+                if (!validPassword){
+                    setMessage('Contraseña incorrecta')
+                    setAlert('error')
+                    return
+                }else{
+                    setDataUser(data[0])
+                    setMessage('Inicio de sesion exitoso')
+                    setAlert('success')
+    
+                    //tiempo de espera para mostrar el mensaje de exito
+                    setTimeout(() => {
+                        router.push(`/orders`)
+                    }, 5000);
+                }
+            }
         }
-        
     }
 
     return (
