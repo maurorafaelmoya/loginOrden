@@ -35,13 +35,9 @@ const page = () => {
         await setData([]);
     
         if (event.target.value === "all") {
-            console.log('todos')
-
             setData(fullData);
         } else if (event.target.value === "true") {
-            console.log('aceptados')
             const data = fullData;
-
             const newData = data.filter(function (item) {
                 const verifica = item.Status + "";
                 return verifica.indexOf(event.target.value) > -1;
@@ -49,8 +45,6 @@ const page = () => {
             setData(newData);
 
         } else if (event.target.value === "false") {
-            console.log('fallido')
-
             const data = fullData;
             const newData = data.filter(function (item) {
                 const verifica = item.Status + "";
