@@ -1,7 +1,9 @@
-    import * as React from "react";
-    import PropTypes from "prop-types";
-    import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Paper, Chip } from "@mui/material";
-    import { visuallyHidden } from "@mui/utils";
+'use client'
+import * as React from "react";
+import PropTypes from "prop-types";
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Paper, Chip} from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
+import { useEffect } from "react";
 
     function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -125,11 +127,16 @@
 
     export default function TableOrdens(props) {
     const [data, setData] = React.useState(props.row);
-
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("calories");
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    useEffect(() => {
+        console.log('entra??')
+        setData(props.row)
+    }, [props])
+    
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === "asc";
@@ -156,9 +163,12 @@
         [order, orderBy, page, rowsPerPage]
     );
 
+    
+
     return (
         <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
+            
             <TableContainer>
             <Table
                 sx={{ minWidth: 750 }}
